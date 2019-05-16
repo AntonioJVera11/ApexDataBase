@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Personajes.findAll", query = "SELECT p FROM Personajes p")
     , @NamedQuery(name = "Personajes.findById", query = "SELECT p FROM Personajes p WHERE p.id = :id")
+    , @NamedQuery(name = "Personajes.findByNombre", query = "SELECT p FROM Personajes p WHERE p.nombre = :nombre")
     , @NamedQuery(name = "Personajes.findByPasiva", query = "SELECT p FROM Personajes p WHERE p.pasiva = :pasiva")
     , @NamedQuery(name = "Personajes.findByTactica", query = "SELECT p FROM Personajes p WHERE p.tactica = :tactica")
     , @NamedQuery(name = "Personajes.findByDefinitiva", query = "SELECT p FROM Personajes p WHERE p.definitiva = :definitiva")
@@ -43,6 +44,8 @@ public class Personajes implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    @Column(name = "NOMBRE")
+    private String nombre;
     @Column(name = "PASIVA")
     private String pasiva;
     @Column(name = "TACTICA")
@@ -67,6 +70,14 @@ public class Personajes implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getPasiva() {

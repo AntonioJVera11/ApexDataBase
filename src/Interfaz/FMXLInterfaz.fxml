@@ -4,14 +4,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.FMXLInterfazController">
+<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.FMXLInterfazController">
    <children>
-      <TableView fx:id="tableView" prefHeight="400.0" prefWidth="352.0">
+      <TableView fx:id="tableViewArmas" prefHeight="464.0" prefWidth="753.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
-          <TableColumn fx:id="ColumnPersonajes" prefWidth="92.0" text="PERSONAJES" />
-          <TableColumn fx:id="ColumnNombre" text="NOMBRE" />
-            <TableColumn fx:id="ColumnCategoria" prefWidth="71.0" text="CATEGORIA" />
-            <TableColumn fx:id="ColumnMunicion" prefWidth="108.0" text="MUNICION" />
+          <TableColumn fx:id="ColumnPersonajes" prefWidth="150.0" text="PERSONAJES" />
+          <TableColumn fx:id="ColumnNombre" minWidth="0.0" prefWidth="150.0" text="NOMBRE" />
+            <TableColumn fx:id="ColumnCategoria" prefWidth="150.0" text="CATEGORIA" />
+            <TableColumn fx:id="ColumnMunicion" prefWidth="150.0" text="MUNICION" />
+            <TableColumn prefWidth="150.0" text="Column X" />
         </columns>
       </TableView>
    </children>

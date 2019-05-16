@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,24 +27,31 @@ public class NewFXMain extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ContactosView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FMXLInterfaz.fxml"));
         Parent root = fxmlLoader.load();
 
-        emf = Persistence.createEntityManagerFactory("AgendaContactosPU");
+        emf = Persistence.createEntityManagerFactory("ApexCharacters_WeaponsPU");
         em = emf.createEntityManager();
+        
         FMXLInterfazController FMXLInterfazController = (FMXLInterfazController) fxmlLoader.getController(); 
-    }
+        FMXLInterfazController.setEntityManager(em);
+        FMXLInterfazController.cargarTodasArmas();
+        
+        Scene scene = new Scene(root, 1280, 720);
 
+        primaryStage.setTitle("Base de Datos Apex Legends");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 
     @Override
     public void stop() throws Exception {
         em.close(); 
         emf.close(); 
         try { 
-            DriverManager.getConnection("jdbc:derby:BDAgendaContactos;shutdown=true"); 
+            DriverManager.getConnection("jdbc:derby:ApexDB;shutdown=true"); 
         } catch (SQLException ex) { 
         }
-
     }
     
     
@@ -53,5 +61,4 @@ public class NewFXMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
 }

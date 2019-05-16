@@ -9,13 +9,16 @@ import ApexCharactersWeaponsEntities.Armas;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 
 /**
  * FXML Controller class
@@ -23,9 +26,11 @@ import javax.persistence.Query;
  * @author Antonio Juan Vera
  */
 public class FMXLInterfazController implements Initializable {
-
+    
+    private EntityManager entityManager;  
+    
     @FXML
-    private TableColumn<Armas, Integer> ColumnPersonajes;
+    private TableColumn<Armas, String> ColumnPersonajes;
     @FXML
     private TableColumn<Armas, String> ColumnNombre;
     @FXML
@@ -33,7 +38,7 @@ public class FMXLInterfazController implements Initializable {
     @FXML
     private TableColumn<Armas, String> ColumnMunicion;
     @FXML
-    private TableView<?> tableView;
+    private TableView<Armas> tableViewArmas;
 
     /**
      * Initializes the controller class.
@@ -41,16 +46,26 @@ public class FMXLInterfazController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    ColumnPersonajes.setCellValueFactory(new PropertyValueFactory<>("personajes"));
     ColumnNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     ColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
     ColumnMunicion.setCellValueFactory(new PropertyValueFactory<>("munición"));
+    ColumnPersonajes.setCellValueFactory(
+        cellData -> {
+            SimpleStringProperty property = new SimpleStringProperty();
+            if (cellData.getValue().getPersonajes() != null) {
+                property.setValue(cellData.getValue().getPersonajes().getNombre());
+            }
+            return property;
+        }); 
+    }
+    
+    public void setEntityManager(EntityManager entityManager) {
+    this.entityManager = entityManager;
     }
 
     public void cargarTodasArmas() {
     Query queryArmasFindAll = entityManager.createNamedQuery("Armas.findAll");
     List<Armas> listArmas = queryArmasFindAll.getResultList();
-    tableViewContactos.setItems(FXCollections.observableArrayList(listArmas));
-    } 
-    
+    tableViewArmas.setItems(FXCollections.observableArrayList(listArmas));
+    }
 }
