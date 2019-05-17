@@ -53,8 +53,6 @@ public class NewFXMain extends Application {
         } catch (SQLException ex) { 
         }
     }
-    
-    
     /**
      * @param args the command line arguments
      */

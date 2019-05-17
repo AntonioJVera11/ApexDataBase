@@ -39,6 +39,12 @@ public class FMXLInterfazController implements Initializable {
     private TableColumn<Armas, String> ColumnMunicion;
     @FXML
     private TableView<Armas> tableViewArmas;
+    @FXML
+    private TableColumn<Armas, String> ColumnFechaInclusion;
+    @FXML
+    private TableColumn<Armas, String> ColumnCargador;
+    @FXML
+    private TableColumn<Armas, String> ColumnCadencia;
 
     /**
      * Initializes the controller class.
@@ -49,6 +55,9 @@ public class FMXLInterfazController implements Initializable {
     ColumnNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     ColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
     ColumnMunicion.setCellValueFactory(new PropertyValueFactory<>("munición"));
+    ColumnFechaInclusion.setCellValueFactory(new PropertyValueFactory<>("fechainclusion"));
+    ColumnCargador.setCellValueFactory(new PropertyValueFactory<>("cargador"));
+    ColumnCadencia.setCellValueFactory(new PropertyValueFactory<>("cadencia"));
     ColumnPersonajes.setCellValueFactory(
         cellData -> {
             SimpleStringProperty property = new SimpleStringProperty();
