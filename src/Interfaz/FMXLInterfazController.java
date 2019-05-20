@@ -9,6 +9,7 @@ import ApexCharactersWeaponsEntities.Armas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
@@ -190,5 +194,29 @@ public class FMXLInterfazController implements Initializable {
 
     @FXML
     private void onActionButtonSuprimir(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar");
+        alert.setHeaderText("¿Seguro que desea suprimir el registro?");
+        alert.setContentText(armaSeleccionada.getNombre() + " " + armaSeleccionada.getCategoria());
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            //Aquí añadiremos lo que desee hacer el usuario
+            entityManager.getTransaction().begin();
+            entityManager.merge(armaSeleccionada);
+            entityManager.remove(armaSeleccionada);
+            entityManager.getTransaction().commit();
+            
+            tableViewArmas.getItems().remove(armaSeleccionada);
+            
+            tableViewArmas.getFocusModel().focus(null);
+            tableViewArmas.requestFocus();
+        } else {
+            //Aquí añadiremos lo que desee que ocurra cuando el usuario cancele
+            int numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
+            tableViewArmas.getItems().set(numFilaSeleccionada, armaSeleccionada);
+            TablePosition pos = new TablePosition(tableViewArmas, numFilaSeleccionada, null);
+            tableViewArmas.getFocusModel().focus(pos);
+            tableViewArmas.requestFocus();
+        }
     }
 }
