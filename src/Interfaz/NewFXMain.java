@@ -10,8 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,8 +28,11 @@ public class NewFXMain extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
+        StackPane rootMain = new StackPane ();
+        
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FMXLInterfaz.fxml"));
-        Parent root = fxmlLoader.load();
+        Pane rootFMXLInterfaz = fxmlLoader.load();
+        rootMain.getChildren().add(rootFMXLInterfaz);
 
         emf = Persistence.createEntityManagerFactory("ApexCharacters_WeaponsPU");
         em = emf.createEntityManager();
@@ -37,7 +41,7 @@ public class NewFXMain extends Application {
         FMXLInterfazController.setEntityManager(em);
         FMXLInterfazController.cargarTodasArmas();
         
-        Scene scene = new Scene(root, 1280, 720);
+        Scene scene = new Scene(rootMain, 1200, 700);
 
         primaryStage.setTitle("Base de Datos Apex Legends");
         primaryStage.setScene(scene);

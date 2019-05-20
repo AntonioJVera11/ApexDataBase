@@ -6,20 +6,27 @@
 package Interfaz;
 
 import ApexCharactersWeaponsEntities.Armas;
+import com.sun.istack.internal.logging.Logger;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -53,6 +60,8 @@ public class FMXLInterfazController implements Initializable {
     private TextField textFieldNombre;
     @FXML
     private TextField textFieldCategoria;
+    @FXML
+    private AnchorPane rootFMXLInterfaz;
 
     /**
      * Initializes the controller class.
@@ -109,5 +118,31 @@ public class FMXLInterfazController implements Initializable {
             tableViewArmas.getFocusModel().focus(pos);
             tableViewArmas.requestFocus();
         }
+    }
+
+    @FXML
+    private void onActionButtonNuevo(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FMXLFormulario.fxml"));
+            Parent rootDetalleView = fxmlLoader.load();                
+
+            rootFMXLInterfaz.setVisible(false);
+
+            StackPane rootMain = (StackPane)rootFMXLInterfaz.getScene().getRoot();
+            rootMain.getChildren().add(rootDetalleView);
+
+            FMXLFormularioController fmxlFormularioController = (FMXLFormularioController) fxmlLoader.getController();  
+            fmxlFormularioController.setRootInterfazController(rootFMXLInterfaz);
+        } catch (IOException ex) {
+            //Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void onActionButtonEditar(ActionEvent event) {
+    }
+
+    @FXML
+    private void onActionButtonSuprimir(ActionEvent event) {
     }
 }

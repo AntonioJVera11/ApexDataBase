@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Fri May 17 20:09:20 CEST 2019:
- Iniciando instancia a816c00e-016a-c6fb-eff8-000004e46cf0 de Derby, versión The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): 
+Mon May 20 12:43:38 CEST 2019:
+ Iniciando instancia a816c00e-016a-d4d6-f5f2-000004e0c558 de Derby, versión The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): 
 en el directorio de base de datos C:\Users\Antonio Juan Vera\Documents\NetBeansProjects\ApexCharacters&Weapons\ApexDB con el cargador de clases sun.misc.Launcher$AppClassLoader@6f94fa3e
 Cargado desde file:/C:/Program%20Files/Java/jdk1.8.0_111/db/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -12,5 +12,5 @@ os.version=10.0
 derby.system.home=null
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
 ----------------------------------------------------------------
-Fri May 17 20:09:30 CEST 2019:
-Cerrando la instancia a816c00e-016a-c6fb-eff8-000004e46cf0 en el directorio de base de datos C:\Users\Antonio Juan Vera\Documents\NetBeansProjects\ApexCharacters&Weapons\ApexDB con cargador de clases sun.misc.Launcher$AppClassLoader@6f94fa3e
+Mon May 20 12:43:53 CEST 2019:
+Cerrando la instancia a816c00e-016a-d4d6-f5f2-000004e0c558 en el directorio de base de datos C:\Users\Antonio Juan Vera\Documents\NetBeansProjects\ApexCharacters&Weapons\ApexDB con cargador de clases sun.misc.Launcher$AppClassLoader@6f94fa3e
