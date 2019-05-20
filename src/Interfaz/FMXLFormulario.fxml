@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane id="AnchorPane" fx:id="rootFMXLFormulario" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Interfaz.FMXLFormularioController">
+<AnchorPane id="AnchorPane" fx:id="rootFMXLFormulario" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.FMXLFormularioController">
    <children>
       <GridPane hgap="10.0" prefHeight="400.0" prefWidth="600.0" vgap="10.0">
         <columnConstraints>
@@ -47,7 +46,7 @@
             <Label text="Modificable:" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <Label text="Foto:" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
             <TextField fx:id="textFieldNombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="textFieldCategoría" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="textFieldCategoria" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="textFieldMunicion" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <DatePicker fx:id="dataPickerFechaInclusion" prefHeight="25.0" prefWidth="312.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="textFieldCargador" GridPane.columnIndex="1" GridPane.rowIndex="5" />

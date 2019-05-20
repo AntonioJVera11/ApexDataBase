@@ -6,12 +6,10 @@
 package Interfaz;
 
 import ApexCharactersWeaponsEntities.Armas;
-import com.sun.istack.internal.logging.Logger;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -62,6 +60,9 @@ public class FMXLInterfazController implements Initializable {
     private TextField textFieldCategoria;
     @FXML
     private AnchorPane rootFMXLInterfaz;
+    private TableView tableViewPrevio;
+    private Armas armas;
+    private boolean nuevoArma;
 
     /**
      * Initializes the controller class.
@@ -96,6 +97,21 @@ public class FMXLInterfazController implements Initializable {
     public void setEntityManager(EntityManager entityManager) {
     this.entityManager = entityManager;
     }
+    
+    public void setTableViewPrevio(TableView tableViewPrevio) {
+        this.tableViewPrevio = tableViewPrevio;
+    }
+    
+    public void setArma(EntityManager entitymanager, Armas armas, boolean nuevoArma) {
+        this.entityManager = entityManager;
+        entityManager.getTransaction().begin();
+        if(!nuevoArma) {
+           this.armas = entityManager.find(Armas.class, armas.getId());
+        } else {
+            this.armas = armas;
+        }
+        this.nuevoArma = nuevoArma;
+    }
 
     public void cargarTodasArmas() {
     Query queryArmasFindAll = entityManager.createNamedQuery("Armas.findAll");
@@ -112,11 +128,19 @@ public class FMXLInterfazController implements Initializable {
             entityManager.merge(armaSeleccionada);
             entityManager.getTransaction().commit();
             
-            int numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
-            tableViewArmas.getItems().set(numFilaSeleccionada, armaSeleccionada);
-            TablePosition pos = new TablePosition(tableViewArmas, numFilaSeleccionada, null);
-            tableViewArmas.getFocusModel().focus(pos);
-            tableViewArmas.requestFocus();
+            int numFilaSeleccionada;
+            if(nuevoArma) {
+                tableViewPrevio.getItems().add(armas);
+                numFilaSeleccionada = tableViewPrevio.getItems().size() -1;
+                tableViewPrevio.getSelectionModel().select(numFilaSeleccionada);
+                tableViewPrevio.scrollTo(numFilaSeleccionada);
+            } else {
+                numFilaSeleccionada = tableViewPrevio.getSelectionModel().getSelectedIndex();
+                tableViewPrevio.getItems().set(numFilaSeleccionada, armas);
+            }
+            TablePosition pos = new TablePosition(tableViewPrevio, numFilaSeleccionada, null);
+            tableViewPrevio.getFocusModel().focus(pos);
+            tableViewPrevio.requestFocus();
         }
     }
 
@@ -133,6 +157,11 @@ public class FMXLInterfazController implements Initializable {
 
             FMXLFormularioController fmxlFormularioController = (FMXLFormularioController) fxmlLoader.getController();  
             fmxlFormularioController.setRootInterfazController(rootFMXLInterfaz);
+            fmxlFormularioController.setTableViewPrevio(tableViewArmas);
+            
+            armaSeleccionada = new Armas();
+            fmxlFormularioController.setArmas(entityManager, armaSeleccionada, true);
+            fmxlFormularioController.mostrarDatos();
         } catch (IOException ex) {
             //Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -140,6 +169,23 @@ public class FMXLInterfazController implements Initializable {
 
     @FXML
     private void onActionButtonEditar(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FMXLFormulario.fxml"));
+            Parent rootDetalleView = fxmlLoader.load();                
+
+            rootFMXLInterfaz.setVisible(false);
+
+            StackPane rootMain = (StackPane)rootFMXLInterfaz.getScene().getRoot();
+            rootMain.getChildren().add(rootDetalleView);
+
+            FMXLFormularioController fmxlFormularioController = (FMXLFormularioController) fxmlLoader.getController();  
+            fmxlFormularioController.setRootInterfazController(rootFMXLInterfaz);
+            fmxlFormularioController.setArmas(entityManager, armaSeleccionada, false);
+            fmxlFormularioController.mostrarDatos();
+
+        } catch (IOException ex) {
+            //Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

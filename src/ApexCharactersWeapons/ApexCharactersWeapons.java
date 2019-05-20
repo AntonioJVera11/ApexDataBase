@@ -110,7 +110,7 @@ public class ApexCharactersWeapons {
         wingman.setCargador(Short.decode("4"));
         wingman.setNombre("Wingman");
         wingman.setCategoria("Pistola");
-        wingman.setMunición("Pesada");
+        wingman.setMunicion("Pesada");
         wingman.setPersonajes(mirage);
         
         
@@ -119,7 +119,7 @@ public class ApexCharactersWeapons {
         carabina.setCargador(Short.decode("18"));
         carabina.setNombre("Carabina R-301");
         carabina.setCategoria("Rifle de Asalto");
-        carabina.setMunición("Ligera");
+        carabina.setMunicion("Ligera");
         carabina.setPersonajes(bangalore); 
         
         

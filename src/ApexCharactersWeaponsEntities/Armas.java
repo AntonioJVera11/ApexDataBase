@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Armas.findById", query = "SELECT a FROM Armas a WHERE a.id = :id")
     , @NamedQuery(name = "Armas.findByNombre", query = "SELECT a FROM Armas a WHERE a.nombre = :nombre")
     , @NamedQuery(name = "Armas.findByCategoria", query = "SELECT a FROM Armas a WHERE a.categoria = :categoria")
-    , @NamedQuery(name = "Armas.findByMunici\u00f3n", query = "SELECT a FROM Armas a WHERE a.munici\u00f3n = :munici\u00f3n")
+    , @NamedQuery(name = "Armas.findByMunicion", query = "SELECT a FROM Armas a WHERE a.municion = :municion")
     , @NamedQuery(name = "Armas.findByFechainclusion", query = "SELECT a FROM Armas a WHERE a.fechainclusion = :fechainclusion")
     , @NamedQuery(name = "Armas.findByCargador", query = "SELECT a FROM Armas a WHERE a.cargador = :cargador")
     , @NamedQuery(name = "Armas.findByCadencia", query = "SELECT a FROM Armas a WHERE a.cadencia = :cadencia")
@@ -53,8 +53,8 @@ public class Armas implements Serializable {
     private String nombre;
     @Column(name = "CATEGORIA")
     private String categoria;
-    @Column(name = "MUNICI\u00d3N")
-    private String munición;
+    @Column(name = "MUNICION")
+    private String municion;
     @Column(name = "FECHAINCLUSION")
     @Temporal(TemporalType.DATE)
     private Date fechainclusion;
@@ -102,12 +102,12 @@ public class Armas implements Serializable {
         this.categoria = categoria;
     }
 
-    public String getMunición() {
-        return munición;
+    public String getMunicion() {
+        return municion;
     }
 
-    public void setMunición(String munición) {
-        this.munición = munición;
+    public void setMunicion(String municion) {
+        this.municion = municion;
     }
 
     public Date getFechainclusion() {
