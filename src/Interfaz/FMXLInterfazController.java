@@ -194,29 +194,37 @@ public class FMXLInterfazController implements Initializable {
 
     @FXML
     private void onActionButtonSuprimir(ActionEvent event) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar");
-        alert.setHeaderText("¿Seguro que desea suprimir el registro?");
-        alert.setContentText(armaSeleccionada.getNombre() + " " + armaSeleccionada.getCategoria());
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            //Aquí añadiremos lo que desee hacer el usuario
-            entityManager.getTransaction().begin();
-            entityManager.merge(armaSeleccionada);
-            entityManager.remove(armaSeleccionada);
-            entityManager.getTransaction().commit();
-            
-            tableViewArmas.getItems().remove(armaSeleccionada);
-            
-            tableViewArmas.getFocusModel().focus(null);
-            tableViewArmas.requestFocus();
+        if (armaSeleccionada != null) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmar");
+            alert.setHeaderText("¿Seguro que desea suprimir el registro?");
+            alert.setContentText(armaSeleccionada.getNombre() + " " + armaSeleccionada.getCategoria());
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                //Aquí añadiremos lo que desee hacer el usuario
+                entityManager.getTransaction().begin();
+                entityManager.merge(armaSeleccionada);
+                entityManager.remove(armaSeleccionada);
+                entityManager.getTransaction().commit();
+
+                tableViewArmas.getItems().remove(armaSeleccionada);
+
+                tableViewArmas.getFocusModel().focus(null);
+                tableViewArmas.requestFocus();
+            } else {
+                //Aquí añadiremos lo que desee que ocurra cuando el usuario cancele
+                int numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
+                tableViewArmas.getItems().set(numFilaSeleccionada, armaSeleccionada);
+                TablePosition pos = new TablePosition(tableViewArmas, numFilaSeleccionada, null);
+                tableViewArmas.getFocusModel().focus(pos);
+                tableViewArmas.requestFocus();
+            } 
         } else {
-            //Aquí añadiremos lo que desee que ocurra cuando el usuario cancele
-            int numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
-            tableViewArmas.getItems().set(numFilaSeleccionada, armaSeleccionada);
-            TablePosition pos = new TablePosition(tableViewArmas, numFilaSeleccionada, null);
-            tableViewArmas.getFocusModel().focus(pos);
-            tableViewArmas.requestFocus();
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Atención");
+        alert.setHeaderText("Debe seleccionar un registro para suprimirlo");
+        alert.showAndWait();
         }
+    
     }
 }
