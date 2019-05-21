@@ -76,7 +76,7 @@ public class FMXLInterfazController implements Initializable {
         // TODO
     ColumnNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     ColumnCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-    ColumnMunicion.setCellValueFactory(new PropertyValueFactory<>("munición"));
+    ColumnMunicion.setCellValueFactory(new PropertyValueFactory<>("municion"));
     //ColumnFechaInclusion.setCellValueFactory(new PropertyValueFactory<>("fechainclusion"));
     ColumnCargador.setCellValueFactory(new PropertyValueFactory<>("cargador"));
     ColumnCadencia.setCellValueFactory(new PropertyValueFactory<>("cadencia"));
@@ -100,10 +100,6 @@ public class FMXLInterfazController implements Initializable {
     
     public void setEntityManager(EntityManager entityManager) {
     this.entityManager = entityManager;
-    }
-    
-    public void setTableViewPrevio(TableView tableViewPrevio) {
-        this.tableViewPrevio = tableViewPrevio;
     }
     
     public void setArma(EntityManager entitymanager, Armas armas, boolean nuevoArma) {
@@ -130,21 +126,23 @@ public class FMXLInterfazController implements Initializable {
             armaSeleccionada.setCategoria(textFieldCategoria.getText());
             entityManager.getTransaction().begin();
             entityManager.merge(armaSeleccionada);
-            entityManager.getTransaction().commit();
+            //entityManager.getTransaction().commit();
             
             int numFilaSeleccionada;
             if(nuevoArma) {
-                tableViewPrevio.getItems().add(armas);
-                numFilaSeleccionada = tableViewPrevio.getItems().size() -1;
-                tableViewPrevio.getSelectionModel().select(numFilaSeleccionada);
-                tableViewPrevio.scrollTo(numFilaSeleccionada);
+                tableViewArmas.getItems().add(armas);
+                numFilaSeleccionada = tableViewArmas.getItems().size() -1;
+                tableViewArmas.getSelectionModel().select(numFilaSeleccionada);
+                tableViewArmas.scrollTo(numFilaSeleccionada);
             } else {
-                numFilaSeleccionada = tableViewPrevio.getSelectionModel().getSelectedIndex();
-                tableViewPrevio.getItems().set(numFilaSeleccionada, armas);
+                //System.out.println(tableViewPrevio);
+                numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
+                tableViewArmas.getItems().set(numFilaSeleccionada, armas);
             }
-            TablePosition pos = new TablePosition(tableViewPrevio, numFilaSeleccionada, null);
-            tableViewPrevio.getFocusModel().focus(pos);
-            tableViewPrevio.requestFocus();
+            TablePosition pos = new TablePosition(tableViewArmas, numFilaSeleccionada, null);
+            tableViewArmas.getFocusModel().focus(pos);
+            tableViewArmas.requestFocus();
+            entityManager.getTransaction().commit();
         }
     }
 
@@ -164,7 +162,7 @@ public class FMXLInterfazController implements Initializable {
             fmxlFormularioController.setTableViewPrevio(tableViewArmas);
             
             armaSeleccionada = new Armas();
-            fmxlFormularioController.setArmas(entityManager, armaSeleccionada, true);
+            fmxlFormularioController.setArma(entityManager, armaSeleccionada, true);
             fmxlFormularioController.mostrarDatos();
         } catch (IOException ex) {
             //Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,7 +182,7 @@ public class FMXLInterfazController implements Initializable {
 
             FMXLFormularioController fmxlFormularioController = (FMXLFormularioController) fxmlLoader.getController();  
             fmxlFormularioController.setRootInterfazController(rootFMXLInterfaz);
-            fmxlFormularioController.setArmas(entityManager, armaSeleccionada, false);
+            fmxlFormularioController.setArma(entityManager, armaSeleccionada, false);
             fmxlFormularioController.mostrarDatos();
 
         } catch (IOException ex) {
