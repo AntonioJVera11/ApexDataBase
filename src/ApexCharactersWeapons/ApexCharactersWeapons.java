@@ -29,6 +29,7 @@ public class ApexCharactersWeapons {
         // Conectar con la base de datos
         Map<String, String> emfProperties = new HashMap<String, String>();
         emfProperties.put("javax.persistence.schema-generation.database.action", "create");
+        emfProperties.put("javax.persistence.jdbc.url", "jdbc:derby:ApexDB;create=true");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ApexCharacters_WeaponsPU", emfProperties);
         EntityManager em = emf.createEntityManager();
 
@@ -144,7 +145,7 @@ public class ApexCharactersWeapons {
         // Cerrar la conexión con la base de datos
         em.close();
         emf.close();
-    try {
+        try {
             DriverManager.getConnection("jdbc:derby:ApexDB;shutdown=true");
         } catch (SQLException ex) {
         }

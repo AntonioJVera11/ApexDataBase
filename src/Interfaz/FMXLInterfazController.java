@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -64,7 +66,6 @@ public class FMXLInterfazController implements Initializable {
     private TextField textFieldCategoria;
     @FXML
     private AnchorPane rootFMXLInterfaz;
-    private TableView tableViewPrevio;
     private Armas armas;
     private boolean nuevoArma;
 
@@ -89,28 +90,20 @@ public class FMXLInterfazController implements Initializable {
             return property;
         }); 
     tableViewArmas.getSelectionModel().selectedItemProperty().addListener(
-            (ObservableValue<? extends Armas> observable, Armas oldValue, Armas newValue) -> {
+            (observable, oldValue, newValue) -> {
                 armaSeleccionada = newValue;
                 if (armaSeleccionada != null) {
                     textFieldNombre.setText(armaSeleccionada.getNombre());
                     textFieldCategoria.setText(armaSeleccionada.getCategoria());
+                } else {
+                    textFieldNombre.setText("");
+                    textFieldCategoria.setText("");
                 }
             });
     }
     
     public void setEntityManager(EntityManager entityManager) {
     this.entityManager = entityManager;
-    }
-    
-    public void setArma(EntityManager entitymanager, Armas armas, boolean nuevoArma) {
-        this.entityManager = entityManager;
-        entityManager.getTransaction().begin();
-        if(!nuevoArma) {
-           this.armas = entityManager.find(Armas.class, armas.getId());
-        } else {
-            this.armas = armas;
-        }
-        this.nuevoArma = nuevoArma;
     }
 
     public void cargarTodasArmas() {
@@ -126,23 +119,13 @@ public class FMXLInterfazController implements Initializable {
             armaSeleccionada.setCategoria(textFieldCategoria.getText());
             entityManager.getTransaction().begin();
             entityManager.merge(armaSeleccionada);
-            //entityManager.getTransaction().commit();
+            entityManager.getTransaction().commit();
             
-            int numFilaSeleccionada;
-            if(nuevoArma) {
-                tableViewArmas.getItems().add(armas);
-                numFilaSeleccionada = tableViewArmas.getItems().size() -1;
-                tableViewArmas.getSelectionModel().select(numFilaSeleccionada);
-                tableViewArmas.scrollTo(numFilaSeleccionada);
-            } else {
-                //System.out.println(tableViewPrevio);
-                numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
-                tableViewArmas.getItems().set(numFilaSeleccionada, armas);
-            }
+            
+            int numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
             TablePosition pos = new TablePosition(tableViewArmas, numFilaSeleccionada, null);
             tableViewArmas.getFocusModel().focus(pos);
             tableViewArmas.requestFocus();
-            entityManager.getTransaction().commit();
         }
     }
 
@@ -165,29 +148,37 @@ public class FMXLInterfazController implements Initializable {
             fmxlFormularioController.setArma(entityManager, armaSeleccionada, true);
             fmxlFormularioController.mostrarDatos();
         } catch (IOException ex) {
-            //Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
     private void onActionButtonEditar(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FMXLFormulario.fxml"));
-            Parent rootDetalleView = fxmlLoader.load();                
+        if(armaSeleccionada != null) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FMXLFormulario.fxml"));
+                Parent rootDetalleView = fxmlLoader.load();                
 
-            rootFMXLInterfaz.setVisible(false);
+                rootFMXLInterfaz.setVisible(false);
 
-            StackPane rootMain = (StackPane)rootFMXLInterfaz.getScene().getRoot();
-            rootMain.getChildren().add(rootDetalleView);
+                StackPane rootMain = (StackPane)rootFMXLInterfaz.getScene().getRoot();
+                rootMain.getChildren().add(rootDetalleView);
 
-            FMXLFormularioController fmxlFormularioController = (FMXLFormularioController) fxmlLoader.getController();  
-            fmxlFormularioController.setRootInterfazController(rootFMXLInterfaz);
-            fmxlFormularioController.setArma(entityManager, armaSeleccionada, false);
-            fmxlFormularioController.mostrarDatos();
+                FMXLFormularioController fmxlFormularioController = (FMXLFormularioController) fxmlLoader.getController();  
+                fmxlFormularioController.setRootInterfazController(rootFMXLInterfaz);
+                fmxlFormularioController.setTableViewPrevio(tableViewArmas);
+                fmxlFormularioController.setArma(entityManager, armaSeleccionada, false);
+                fmxlFormularioController.mostrarDatos();
 
-        } catch (IOException ex) {
-            //Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            } catch (IOException ex) {
+                Logger.getLogger(FMXLInterfazController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Atención");
+            alert.setHeaderText("Debe seleccionar un registro");
+            alert.showAndWait();
+        }    
     }
 
     @FXML
@@ -201,7 +192,7 @@ public class FMXLInterfazController implements Initializable {
             if (result.get() == ButtonType.OK) {
                 //Aquí añadiremos lo que desee hacer el usuario
                 entityManager.getTransaction().begin();
-                entityManager.merge(armaSeleccionada);
+                //entityManager.merge(armaSeleccionada);
                 entityManager.remove(armaSeleccionada);
                 entityManager.getTransaction().commit();
 

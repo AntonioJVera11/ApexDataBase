@@ -23,11 +23,13 @@ import javax.persistence.Persistence;
  * @author Antonio Juan Vera
  */
 public class NewFXMain extends Application {
+    
     private EntityManagerFactory emf;
     private EntityManager em;
     
     @Override
     public void start(Stage primaryStage) throws IOException {
+        
         StackPane rootMain = new StackPane ();
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FMXLInterfaz.fxml"));
@@ -57,9 +59,7 @@ public class NewFXMain extends Application {
         } catch (SQLException ex) { 
         }
     }
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
         launch(args);
     }
