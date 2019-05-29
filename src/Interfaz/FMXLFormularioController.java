@@ -100,8 +100,9 @@ public class FMXLFormularioController implements Initializable {
         this.tableViewPrevio = tableViewPrevio;
     }
     
-    public void setArma(EntityManager entitymanager, Armas armas, boolean nuevoArma) {
+    public void setArma(EntityManager entityManager, Armas armas, boolean nuevoArma) {
         this.entityManager = entityManager;
+        System.out.println(entityManager);
         entityManager.getTransaction().begin();
         if(!nuevoArma) {
            this.armas = entityManager.find(Armas.class, armas.getId());

@@ -123,6 +123,9 @@ public class FMXLInterfazController implements Initializable {
             
             
             int numFilaSeleccionada = tableViewArmas.getSelectionModel().getSelectedIndex();
+            tableViewArmas.getItems().set(numFilaSeleccionada, armaSeleccionada);
+            
+            
             TablePosition pos = new TablePosition(tableViewArmas, numFilaSeleccionada, null);
             tableViewArmas.getFocusModel().focus(pos);
             tableViewArmas.requestFocus();
@@ -145,6 +148,7 @@ public class FMXLInterfazController implements Initializable {
             fmxlFormularioController.setTableViewPrevio(tableViewArmas);
             
             armaSeleccionada = new Armas();
+            System.out.println(entityManager);
             fmxlFormularioController.setArma(entityManager, armaSeleccionada, true);
             fmxlFormularioController.mostrarDatos();
         } catch (IOException ex) {

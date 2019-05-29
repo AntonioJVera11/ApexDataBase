@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="AnchorPane" fx:id="rootFMXLFormulario" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.FMXLFormularioController">
    <children>
@@ -66,9 +67,16 @@
             </HBox>
             <Button mnemonicParsing="false" onAction="#onActionButtonGuardar" prefHeight="25.0" prefWidth="118.0" text="Guardar" GridPane.columnIndex="2" />
             <Button mnemonicParsing="false" onAction="#onActionButtonCancelar" prefHeight="25.0" prefWidth="121.0" text="Cancelar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" onAction="#onActionButtonExaminar" prefHeight="25.0" prefWidth="93.0" text="Examinar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-            <ImageView fx:id="imageViewFoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Button mnemonicParsing="false" onAction="#onActionButtonSuprimirFoto" prefHeight="25.0" prefWidth="88.0" text="Suprimir Foto" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <VBox prefHeight="60.0" prefWidth="138.0" spacing="10.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+               <children>
+                  <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onActionButtonSuprimirFoto" prefHeight="25.0" prefWidth="88.0" text="Suprimir Foto" />
+                  <Button mnemonicParsing="false" onAction="#onActionButtonExaminar" prefHeight="25.0" prefWidth="93.0" text="Examinar" />
+               </children>
+               <padding>
+                  <Insets left="200.0" />
+               </padding>
+            </VBox>
+            <ImageView fx:id="imageViewFoto" fitHeight="125.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </children>
